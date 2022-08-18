@@ -9,6 +9,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <imgui/misc/freetype/imgui_freetype.h>
+#include <imgui/misc/cpp/imgui_stdlib.h>
 
 template<typename T>
 struct async_queue
@@ -97,34 +98,6 @@ void connection_thread(async_queue<nlohmann::json>& server_messages, async_queue
     }
 }
 
-void async_client_input(async_queue<std::string>& client_messages)
-{
-    while(1)
-    {
-        std::string str;
-        std::getline(std::cin, str);
-
-        client_messages.push(str);
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    }
-}
-
-void async_client_output(async_queue<nlohmann::json>& server_messages)
-{
-    while(1)
-    {
-        while(server_messages.has_front())
-        {
-            nlohmann::json js = server_messages.pop_front();
-
-            std::cout << (std::string)js["msg"] << std::endl;
-        }
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    }
-}
-
 int main()
 {
     render_settings sett;
@@ -150,16 +123,38 @@ int main()
     async_queue<nlohmann::json> server_messages;
 
     std::thread(connection_thread, std::ref(server_messages), std::ref(client_messages)).detach();
-    //std::thread(async_client_input, std::ref(client_messages)).detach();
-    //std::thread(async_client_output, std::ref(server_messages)).detach();
+
+    std::vector<std::string> text_history;
+
+    std::string command;
 
     while(1)
     {
         window.poll();
 
-        ImGui::Begin("Hi there", nullptr);
+        ImGui::Begin("Hi there", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
-        ImGui::Text("Test Text");
+        //ImGui::Text("Test Text");
+
+        while(server_messages.has_front())
+        {
+            nlohmann::json js = server_messages.pop_front();
+
+            std::string msg = js["msg"];
+
+            text_history.push_back(msg);
+        }
+
+        for(std::string& txt : text_history)
+        {
+            ImGui::Text("%s\n", txt.c_str());
+        }
+
+        if(ImGui::InputText("Input", &command, ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+            client_messages.push(command);
+            command.clear();
+        }
 
         ImGui::End();
 
