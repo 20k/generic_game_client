@@ -114,7 +114,7 @@ void async_client_output(async_queue<nlohmann::json>& server_messages)
         {
             nlohmann::json js = server_messages.pop_front();
 
-            std::cout << js["msg"] << std::endl;
+            std::cout << (std::string)js["msg"] << std::endl;
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
