@@ -1,0 +1,12 @@
+[submodule "deps/vec"]
+	path = deps/vec
+	url = https://github.com/20k/funvectormaths
+[submodule "deps/imgui"]
+	path = deps/imgui
+	url = https://github.com/20k/imgui-fork
+[submodule "deps/networking"]
+	path = deps/networking
+	url = git@github.com:20k/clientservernetworking.git
+[submodule "deps/toolkit"]
+	path = deps/toolkit
+	url = git@github.com:20k/JGameToolkit.git
