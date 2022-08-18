@@ -5,6 +5,10 @@
 #include <nlohmann/json.hpp>
 #include <networking/networking.hpp>
 #include <chrono>
+#include <toolkit/render_window.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/Sleep.hpp>
+#include <imgui/misc/freetype/imgui_freetype.h>
 
 template<typename T>
 struct async_queue
@@ -49,7 +53,7 @@ void connection_thread(async_queue<nlohmann::json>& server_messages, async_queue
     {
         if(!connected && conn.connection_pending())
         {
-            std::cout << "Connected\n";
+            //std::cout << "Connected\n";
 
             nlohmann::json js;
             js["type"] = 0;
@@ -123,16 +127,45 @@ void async_client_output(async_queue<nlohmann::json>& server_messages)
 
 int main()
 {
+    render_settings sett;
+    sett.width = 800;
+    sett.height = 600;
+    sett.is_srgb = false;
+
+    render_window window(sett, "hello");
+
+    ImFontAtlas* atlas = ImGui::GetIO().Fonts;
+    atlas->FontBuilderFlags = ImGuiFreeTypeBuilderFlags_LCD | ImGuiFreeTypeBuilderFlags_FILTER_DEFAULT | ImGuiFreeTypeBuilderFlags_LoadColor;
+
+    ImFontConfig font_cfg;
+    font_cfg.GlyphExtraSpacing = ImVec2(0, 0);
+    font_cfg.FontBuilderFlags = ImGuiFreeTypeBuilderFlags_LCD | ImGuiFreeTypeBuilderFlags_FILTER_DEFAULT | ImGuiFreeTypeBuilderFlags_LoadColor;
+
+    ImGuiIO& io = ImGui::GetIO();
+
+    io.Fonts->Clear();
+    io.Fonts->AddFontFromFileTTF("DosFont.ttf", 16, &font_cfg);
+
     async_queue<std::string> client_messages;
     async_queue<nlohmann::json> server_messages;
 
     std::thread(connection_thread, std::ref(server_messages), std::ref(client_messages)).detach();
-    std::thread(async_client_input, std::ref(client_messages)).detach();
-    std::thread(async_client_output, std::ref(server_messages)).detach();
+    //std::thread(async_client_input, std::ref(client_messages)).detach();
+    //std::thread(async_client_output, std::ref(server_messages)).detach();
 
     while(1)
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1024));
+        window.poll();
+
+        ImGui::Begin("Hi there", nullptr);
+
+        ImGui::Text("Test Text");
+
+        ImGui::End();
+
+        window.display();
+
+        sf::sleep(sf::milliseconds(1));
     }
 
     return 0;
