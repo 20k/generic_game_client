@@ -64,6 +64,14 @@ int main()
             connected = true;
         }
 
+        if(!conn.client_connected_to_server && !conn.connection_in_progress && clk.getElapsedTime().asSeconds() > 1)
+        {
+            conn.connect("127.0.0.1", 6600, connection_type::SSL);
+            clk.restart();
+
+            connected = false;
+        }
+
         conn.receive_bulk(recv);
 
         for(auto& [id, datas] : recv.websocket_read_queue)
