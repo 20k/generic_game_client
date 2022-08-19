@@ -101,7 +101,7 @@ int main()
     render_settings sett;
     sett.width = 800;
     sett.height = 600;
-    sett.is_srgb = false;
+    sett.is_srgb = true;
 
     render_window window(sett, "hello");
 
