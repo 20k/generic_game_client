@@ -131,15 +131,17 @@ int main()
     ui_window ui;
     uint64_t sequence_id_in = 0;
 
-    while(1)
+    while(!window.should_close())
     {
         if(!connected && conn.client_connected_to_server)
         {
-            nlohmann::json js;
+            /*nlohmann::json js;
             js["type"] = 0;
             js["msg"] = "connected";
 
-            server_messages.push_back(js);
+            server_messages.push_back(js);*/
+
+            printf("Connected\n");
 
             connected = true;
         }
