@@ -51,7 +51,6 @@
 			<Add option="-DSDL_MAIN_HANDLED" />
 			<Add option="-DIMGUI_ENABLE_FREETYPE" />
 			<Add option="-DNO_SERIALISE_RATELIMIT" />
-			<Add option="-DNO_DEFAULT_BACKEND" />
 			<Add directory="deps" />
 			<Add directory="deps/imgui" />
 		</Compiler>
@@ -100,7 +99,11 @@
 		<Unit filename="deps/imgui/imgui_draw.cpp" />
 		<Unit filename="deps/imgui/imgui_tables.cpp" />
 		<Unit filename="deps/imgui/imgui_widgets.cpp" />
+		<Unit filename="deps/imgui/misc/cpp/imgui_stdlib.cpp" />
+		<Unit filename="deps/imgui/misc/cpp/imgui_stdlib.h" />
 		<Unit filename="deps/imgui/misc/freetype/imgui_freetype.cpp" />
+		<Unit filename="deps/js_imgui/js_imgui_client.cpp" />
+		<Unit filename="deps/js_imgui/js_imgui_client.hpp" />
 		<Unit filename="deps/networking/beast_compilation_unit.cpp" />
 		<Unit filename="deps/networking/networking.cpp" />
 		<Unit filename="deps/networking/networking.hpp" />
@@ -117,6 +120,7 @@
 		<Unit filename="deps/toolkit/fs_helpers.hpp" />
 		<Unit filename="deps/toolkit/render_window.cpp" />
 		<Unit filename="deps/toolkit/render_window.hpp" />
+		<Unit filename="deps/toolkit/render_window_glfw.cpp" />
 		<Unit filename="deps/toolkit/render_window_glfw.hpp" />
 		<Unit filename="deps/toolkit/stacktrace.cpp" />
 		<Unit filename="deps/toolkit/stacktrace.hpp" />
