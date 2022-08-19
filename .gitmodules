@@ -10,3 +10,6 @@
 [submodule "deps/toolkit"]
 	path = deps/toolkit
 	url = git@github.com:20k/JGameToolkit.git
+[submodule "deps/js_imgui"]
+	path = deps/js_imgui
+	url = git@github.com:20k/js_imgui.git
