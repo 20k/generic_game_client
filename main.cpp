@@ -106,16 +106,17 @@ int main()
     render_window window(sett, "hello");
 
     ImFontAtlas* atlas = ImGui::GetIO().Fonts;
-    atlas->FontBuilderFlags = ImGuiFreeTypeBuilderFlags_LCD | ImGuiFreeTypeBuilderFlags_FILTER_DEFAULT | ImGuiFreeTypeBuilderFlags_LoadColor;
+    atlas->FontBuilderFlags = ImGuiFreeTypeBuilderFlags_ForceAutoHint | ImGuiFreeTypeBuilderFlags_LCD | ImGuiFreeTypeBuilderFlags_FILTER_DEFAULT | ImGuiFreeTypeBuilderFlags_LoadColor;
 
     ImFontConfig font_cfg;
     font_cfg.GlyphExtraSpacing = ImVec2(0, 0);
-    font_cfg.FontBuilderFlags = ImGuiFreeTypeBuilderFlags_LCD | ImGuiFreeTypeBuilderFlags_FILTER_DEFAULT | ImGuiFreeTypeBuilderFlags_LoadColor;
+    font_cfg.FontBuilderFlags = ImGuiFreeTypeBuilderFlags_ForceAutoHint | ImGuiFreeTypeBuilderFlags_LCD | ImGuiFreeTypeBuilderFlags_FILTER_DEFAULT | ImGuiFreeTypeBuilderFlags_LoadColor;
 
     ImGuiIO& io = ImGui::GetIO();
 
     io.Fonts->Clear();
-    io.Fonts->AddFontFromFileTTF("DosFont.ttf", 16, &font_cfg);
+    io.Fonts->AddFontFromFileTTF("VeraMono.ttf", 14, &font_cfg);
+    //io.Fonts->AddFontFromFileTTF("DosFont.ttf", 16, &font_cfg);
 
     std::vector<std::string> client_messages;
     std::vector<nlohmann::json> server_messages;
