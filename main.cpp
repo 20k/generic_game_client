@@ -47,11 +47,13 @@ int main()
 
     bool connected = false;
 
+    sf::Clock clk;
+
     std::string command;
 
     while(1)
     {
-        if(!connected && conn.connection_pending())
+        if(!connected && conn.client_connected_to_server)
         {
             nlohmann::json js;
             js["type"] = 0;
