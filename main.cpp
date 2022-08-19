@@ -98,6 +98,7 @@ int main()
     connection conn;
     conn.connect("127.0.0.1", 6600, connection_type::SSL);
 
+    #ifndef USE_IMTUI
     render_settings sett;
     sett.width = 800;
     sett.height = 600;
@@ -117,6 +118,16 @@ int main()
     io.Fonts->Clear();
     io.Fonts->AddFontFromFileTTF("VeraMono.ttf", 14, &font_cfg);
     //io.Fonts->AddFontFromFileTTF("DosFont.ttf", 16, &font_cfg);
+    #else
+    render_settings sett;
+    sett.width = 800;
+    sett.height = 600;
+    sett.is_srgb = true;
+
+    imtui_backend bck(sett, "hello");
+
+    render_window window(sett, &bck);
+    #endif
 
     std::vector<std::string> client_messages;
     std::vector<nlohmann::json> server_messages;
